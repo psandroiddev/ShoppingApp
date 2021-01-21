@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_shoppingapp/routes/Routes.dart';
 
 import 'dashboard/dashboard.dart';
+import 'dashboard/landingscreen.dart';
+import 'dashboard/loginscreen.dart';
 
 void main() async {
   runApp(MaterialApp(
@@ -11,7 +13,9 @@ void main() async {
     debugShowCheckedModeBanner: false,
     initialRoute: '/',
     routes: {
-      '/': (context) => UserDashboard(),
+      '/': (context) => LandingScreen(),
+      '/loginscreen': (context) => LoginScreen(),
+      '/dashboard': (context) => UserDashboard(),
      /* '/HomePage': (context) => HomePage(),
       '/UserDashboard': (context) => UserDashboard(),
       '/Register': (context) => Register()*/
@@ -93,75 +97,7 @@ class HomeDrawer extends StatelessWidget {
   }
 }
 
-/*drawer: Drawer(
-elevation: 10.0,
-child: Column(
-children: <Widget>[UserAccountsDrawerHeader(
-accountName: Text('Hello Priti,'),
-accountEmail: Text('priti@gmail.com'),
-*//*currentAccountPicture: CircleAvatar(backgroundColor: Colors.yellow,
-              child: Text("abc"),
-            ),*//*
-),
 
-ListTile(title: new Text("Home"),
-leading: new Icon(Icons.home),
-onTap: (){
-//print("Home clicked");
-Navigator.of(context).pop();
-},
-),
-Divider(height: 0.1,),
-ListTile(title: new Text("My Wallet"),
-leading: new Icon(Icons.inbox),
-onTap: () {
-//print("Primary Clicked");
-Navigator.pushReplacementNamed(context, Routes.primary);
-},
-),
-Divider(height: 0.1,),
-ListTile(title: new Text("Reedem"),
-leading: new Icon(Icons.people),
-onTap: (){
-//print("Social Clicked");
-Navigator.pushReplacementNamed(context, Routes.social);
-},
-),
-Divider(height: 0.1,),
-ListTile(title: new Text("Offers"),
-leading: new Icon(Icons.local_offer),
-onTap: (){
-//print("Promotions Clicked");
-Navigator.pushReplacementNamed(context, Routes.promotions);
-},
-),
-Divider(height: 0.1,),
-ListTile(title: new Text("10+1 Plan"),
-leading: new Icon(Icons.people),
-onTap: (){
-//print("Social Clicked");
-Navigator.pushReplacementNamed(context, Routes.social);
-},
-),
-Divider(height: 0.1,),
-ListTile(title: new Text("FAQ"),
-leading: new Icon(Icons.question_answer),
-onTap: (){
-//print("Social Clicked");
-Navigator.pushReplacementNamed(context, Routes.social);
-},
-),
-Divider(height: 0.1,),
-ListTile(title: new Text("Logout"),
-leading: new Icon(Icons.logout),
-onTap: (){
-//print("Social Clicked");
-Navigator.pushReplacementNamed(context, Routes.social);
-},
-),
-],
-),
-),*/
 class MyNavigationBar extends StatefulWidget {
   MyNavigationBar ({Key key}) : super(key: key);
 

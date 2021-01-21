@@ -60,7 +60,7 @@ class _FormState extends State<LoginScreen> {
 
   _submit() {
     // delete all screens from stack and make dashboard as a root of app.
-    Navigator.of(context).pushNamedAndRemoveUntil('/dashboardscreen',
+    Navigator.of(context).pushNamedAndRemoveUntil('/dashboard',
     ModalRoute.withName('/'));
   }
 }
