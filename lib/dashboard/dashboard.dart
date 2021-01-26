@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_shoppingapp/dashboard/products.dart';
+import 'package:flutter_shoppingapp/dashboard/tenplusoneplan.dart';
 
 class UserDashboard extends StatefulWidget {
   @override
@@ -10,8 +12,8 @@ class _UserDashboardState extends State<UserDashboard> {
   PageController _pageController = PageController();
   List<Widget> _screens = <Widget>[
     Center(child: Text('First Page',style: TextStyle(fontSize: 20),)),
-    Center(child: Text('Second  Page',style: TextStyle(fontSize: 20),)),
-    Center(child: Text('Third  Page',style: TextStyle(fontSize: 20),)),
+    new ProductsList(),
+    new TenPlusOnePlan(),
     Center(child: Text('Four  Page',style: TextStyle(fontSize: 20),))
   ];
 
@@ -31,7 +33,7 @@ class _UserDashboardState extends State<UserDashboard> {
     return Scaffold(
       drawer: _drawerHeader(context),
       appBar: AppBar(
-        title: Text('Jwellery'),
+        title: Text('Jewellery'),
       ),
       body: PageView(
         controller: _pageController,
@@ -45,15 +47,15 @@ class _UserDashboardState extends State<UserDashboard> {
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.wallet_giftcard),
-            label: 'Offers',
+            icon: Icon(Icons.grid_view),
+            label: 'Products',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.money),
             label: '10+1 Plan',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.monetization_on),
+            icon: Icon(Icons.wallet_giftcard),
             label: 'Discounts',
           ),
         ],
@@ -117,7 +119,7 @@ class _UserDashboardState extends State<UserDashboard> {
   Widget _drawerList() {
     final item = [
       'Home',
-      'Products',
+      'Add Product',
       'My Wallet',
       'My GoldMine',
       'FAQs',
@@ -128,7 +130,7 @@ class _UserDashboardState extends State<UserDashboard> {
 
     final drawerIcons = [
       Icons.home,
-      Icons.ac_unit,
+      Icons.wallet_giftcard_sharp,
       Icons.money,
       Icons.wallet_giftcard,
       Icons.question_answer,
