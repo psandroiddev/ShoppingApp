@@ -7,14 +7,6 @@ class TenPlusOnePlan extends StatefulWidget {
 
 class _TenPlusOnePlanState extends State<TenPlusOnePlan> {
   int _payableUserAmount = 0;
-  int _firstEmi = 0;
-  int _ninethEmi = 0;
-  int _elevenEmi = 0;
-  int _totalPurchaseAmount = 0;
-  int _yourSavings = 0;
-  double _billAmount = 0.0;
-  int _tipPercentage = 0;
-  int _personCounter = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -52,11 +44,13 @@ class _TenPlusOnePlanState extends State<TenPlusOnePlan> {
                           //prefixText: "Bill Amount",
                           prefixIcon: Icon(Icons.attach_money)),
                       onChanged: (String value) {
-                        try {
-                          _billAmount = double.parse(value);
-                        } catch (exception) {
-                          _billAmount = 0.0;
-                        }
+                        setState(() {
+                          try {
+                            _payableUserAmount = int.parse(value);
+                          } catch (exception) {
+                            _payableUserAmount = 0;
+                          }
+                        });
                       },
                     ),
                   ],
@@ -79,7 +73,7 @@ class _TenPlusOnePlanState extends State<TenPlusOnePlan> {
                         Padding(
                           padding: const EdgeInsets.all(18.0),
                           child: Text(
-                            "\$ 10000",
+                            "Rs. ${calculateFirstEmi(_payableUserAmount)}",
                             style: TextStyle(
                                 color: Colors.purple,
                                 fontSize: 17.0),
@@ -97,7 +91,7 @@ class _TenPlusOnePlanState extends State<TenPlusOnePlan> {
                         Padding(
                           padding: const EdgeInsets.all(18.0),
                           child: Text(
-                            "\$ 10000",
+                            "Rs.${_payableUserAmount}",
                             style: TextStyle(
                                 color: Colors.purple,
                                 fontSize: 17.0),
@@ -115,7 +109,7 @@ class _TenPlusOnePlanState extends State<TenPlusOnePlan> {
                         Padding(
                           padding: const EdgeInsets.all(18.0),
                           child: Text(
-                            "\$ 0",
+                            "Rs.0",
                             style: TextStyle(
                                 color: Colors.purple,
                                 fontSize: 17.0),
@@ -142,7 +136,7 @@ class _TenPlusOnePlanState extends State<TenPlusOnePlan> {
                           color: Colors.grey.shade700),
                     ),
                     Text(
-                      "\$ 20000",
+                      "Rs. ${calculateTotalPurchaseAmount(_payableUserAmount)}",
                       style: TextStyle(
                         color: Colors.purple,
                         fontSize: 19.0,)
@@ -155,7 +149,7 @@ class _TenPlusOnePlanState extends State<TenPlusOnePlan> {
                           color: Colors.grey.shade700),
                     ),
                     Text(
-                        "\$ 20000",
+                        "Rs. ${calculateTotalSavings(_payableUserAmount)}",
                         style: TextStyle(
                           color: Colors.purple,
                           fontSize: 19.0,)
@@ -170,23 +164,25 @@ class _TenPlusOnePlanState extends State<TenPlusOnePlan> {
     );
   }
 }
-calculateTotalPerPerson(double billAmount, int splitBy, int tipPercentage) {
-  var totalPerPerson =
-      (calculateTotalTip(billAmount, splitBy, tipPercentage) + billAmount) /
-          splitBy;
+calculateFirstEmi(int userAmount) {
+  var firstEmi = userAmount / 2;
 
-  return totalPerPerson.toStringAsFixed(2);
+  return firstEmi;
+}
+calculateTotalPurchaseAmount(int userAmount) {
+  var firstEmi = userAmount * 11;
+
+  return firstEmi;
 }
 
-calculateTotalTip(double billAmount, int splitBy, int tipPercentage) {
-  double totalTip = 0.0;
+calculateTotalSavings(int userAmount) {
+  var firstEmi = userAmount / 2;
 
-  if (billAmount < 0 || billAmount.toString().isEmpty || billAmount == null) {
-    // no go!
-  } else {
-    totalTip = (billAmount * tipPercentage) / 100;
-  }
-  return totalTip;
+  var totalSavings = firstEmi + userAmount;
+
+  return totalSavings;
 }
+
+
 
 

@@ -1,5 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
+import 'loginscreen.dart';
+
+/*
 class LandingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -25,4 +30,34 @@ class LandingScreen extends StatelessWidget {
       ),
     );
   }
+}*/
+
+class LandingScreen extends StatefulWidget {
+  @override
+  _LandingScreenState createState() => _LandingScreenState();
 }
+
+class _LandingScreenState extends State<LandingScreen> {
+
+  @override
+  void initState() {
+    super.initState();
+    Timer(Duration(seconds: 3),
+            ()=>Navigator.pushReplacement(context,
+            MaterialPageRoute(builder:
+                (context) => LoginScreen()
+            )
+        )
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        color: Colors.white,
+        child:FlutterLogo(size:MediaQuery.of(context).size.height)
+    );
+  }
+
+}
+

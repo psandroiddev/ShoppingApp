@@ -96,12 +96,20 @@ class ProductsList extends StatelessWidget {
 
   Widget movieImage(String imageUrl){
     return Container(
+      //image: Image.asset('assests/images/jewellery.jpg'),
       width: 70,
       height: 70,
-      decoration: BoxDecoration(
+      /*decoration: BoxDecoration(
           shape: BoxShape.circle,
           image: DecorationImage(
               image: NetworkImage(imageUrl ??  Icon(Icons.photo)),
+              fit: BoxFit.cover
+          )
+      ),*/
+      decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          image: DecorationImage(
+              image: NetworkImage("https://www.vaibhavjewellers.com/blog/wp-content/uploads/2020/05/123g1600-1Stone-work-jewellery-choker-this-is-already-given-i-want-other-image-500x334-1.jpg"),
               fit: BoxFit.cover
           )
       ),

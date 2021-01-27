@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_shoppingapp/dashboard/discount.dart';
 import 'package:flutter_shoppingapp/dashboard/products.dart';
 import 'package:flutter_shoppingapp/dashboard/tenplusoneplan.dart';
 
@@ -11,10 +12,10 @@ class _UserDashboardState extends State<UserDashboard> {
   int  _selectedIndex = 0;
   PageController _pageController = PageController();
   List<Widget> _screens = <Widget>[
-    Center(child: Text('First Page',style: TextStyle(fontSize: 20),)),
+    //Center(child: Text('First Page',style: TextStyle(fontSize: 20),)),
     new ProductsList(),
     new TenPlusOnePlan(),
-    Center(child: Text('Four  Page',style: TextStyle(fontSize: 20),))
+    new Discount()
   ];
 
   void _onItemTapped(int selectedIndex) {
@@ -46,10 +47,10 @@ class _UserDashboardState extends State<UserDashboard> {
             icon: Icon(Icons.home),
             label: 'Home',
           ),
-          BottomNavigationBarItem(
+         /* BottomNavigationBarItem(
             icon: Icon(Icons.grid_view),
             label: 'Products',
-          ),
+          ),*/
           BottomNavigationBarItem(
             icon: Icon(Icons.money),
             label: '10+1 Plan',
