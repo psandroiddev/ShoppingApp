@@ -13,7 +13,7 @@ class DatabaseHelper {
 
   static final columnId = '_id';
   static final columnName = 'name';
-  static final columnAge = 'age';
+  static final columnPrice = 'price';
 
   // make this a singleton class
   DatabaseHelper._privateConstructor();
@@ -43,7 +43,7 @@ class DatabaseHelper {
           CREATE TABLE $table (
             $columnId INTEGER PRIMARY KEY,
             $columnName TEXT NOT NULL,
-            $columnAge INTEGER NOT NULL
+            $columnPrice INTEGER NOT NULL
           )
           ''');
   }

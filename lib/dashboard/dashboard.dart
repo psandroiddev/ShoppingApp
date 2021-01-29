@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_shoppingapp/dashboard/discount.dart';
+import 'package:flutter_shoppingapp/dashboard/loginpage.dart';
 import 'package:flutter_shoppingapp/dashboard/products.dart';
 import 'package:flutter_shoppingapp/dashboard/tenplusoneplan.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class UserDashboard extends StatefulWidget {
   @override
@@ -13,10 +15,13 @@ class _UserDashboardState extends State<UserDashboard> {
   PageController _pageController = PageController();
   List<Widget> _screens = <Widget>[
     //Center(child: Text('First Page',style: TextStyle(fontSize: 20),)),
-    new ProductsList(),
+    new ProductList(),
     new TenPlusOnePlan(),
     new Discount()
   ];
+
+  SharedPreferences loginData;
+  String username;
 
   void _onItemTapped(int selectedIndex) {
     _pageController.jumpToPage(selectedIndex);
@@ -25,6 +30,20 @@ class _UserDashboardState extends State<UserDashboard> {
   void _onPageChanged(int index){
     setState(() {
       _selectedIndex = index;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    initial();
+  }
+
+  void initial() async{
+    loginData = await SharedPreferences.getInstance();
+    setState(() {
+      username = loginData.getString('username');
     });
   }
 
@@ -99,7 +118,7 @@ class _UserDashboardState extends State<UserDashboard> {
                       ),
                     ),
                     Text(
-                      "Hello Priti,",
+                      "Hello $username,",
                       style: TextStyle(fontSize: 20, color: Colors.black87),
                     ),
                     Text(
@@ -164,6 +183,45 @@ class _UserDashboardState extends State<UserDashboard> {
                           borderRadius: BorderRadius.all(Radius.circular(100)),
                         ),
                       ),
+                      onTap: (){
+                         if(item[i] == 'Logout')
+                           {
+                             showDialog(
+                               context: context,
+                               barrierDismissible: false, // user must tap button!
+                               builder: (BuildContext context) {
+                                 return AlertDialog(
+                                   title: Text('Logout'),
+                                   content: SingleChildScrollView(
+                                     child: ListBody(
+                                       children: <Widget>[
+                                         Text('Do you want to logout?'),
+                                         //Text('Would you like to approve of this message?'),
+                                       ],
+                                     ),
+                                   ),
+                                   actions: <Widget>[
+                                     TextButton(
+                                       child: Text('Yes'),
+                                       onPressed: () {
+                                         Navigator.of(context).pop();
+                                         loginData.setBool('login', true);
+                                         Navigator.pushReplacement(context,
+                                             new MaterialPageRoute(builder: (context) => LoginPage()));
+                                       },
+                                     ),
+                                     TextButton(
+                                       child: Text('Cancel'),
+                                       onPressed: () {
+                                         Navigator.of(context).pop();
+                                       },
+                                     ),
+                                   ],
+                                 );
+                               },
+                             );
+                           }
+                      },
                     ),
                     Divider(),
                   ],

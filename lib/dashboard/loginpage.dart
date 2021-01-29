@@ -1,0 +1,157 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_shoppingapp/dashboard/dashboard.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+class LoginPage extends StatefulWidget {
+  @override
+  _LoginPageState createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+
+  TextEditingController username = new TextEditingController();
+  TextEditingController password = new TextEditingController();
+
+  bool checkValue = false;
+
+  SharedPreferences sharedPreferences;
+
+  @override
+  void initState() {
+    super.initState();
+    getCredential();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return new Scaffold(
+      appBar: new AppBar(
+        title: Text('Login'),
+        elevation: 0.0,
+        //backgroundColor: Colors.white12,
+      ),
+      body: new SingleChildScrollView(
+        child: _body(),
+        scrollDirection: Axis.vertical,
+      ),
+    );
+  }
+
+  Widget _body() {
+    return new Container(
+      padding: EdgeInsets.only(right: 20.0, left: 20.0),
+      child: new Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          new Container(
+            margin: EdgeInsets.all(30.0),
+            child: new Image.asset(
+              "assets/images/flutter_icon.png",
+              height: 100.0,
+            ),
+          ),
+          new TextField(
+            controller: username,
+            decoration: InputDecoration(
+                hintText: "Username",
+                hintStyle: new TextStyle(color: Colors.grey.withOpacity(0.3))),
+          ),
+          new TextField(
+              controller: password,
+              obscureText: true,
+              decoration: InputDecoration(
+                  hintText: "Password",
+                  hintStyle:
+                  new TextStyle(color: Colors.grey.withOpacity(0.3)))),
+          new CheckboxListTile(
+            value: checkValue,
+            onChanged: _onChanged,
+            title: new Text("Remember me"),
+            controlAffinity: ListTileControlAffinity.leading,
+          ),
+          new Container(
+            decoration:
+            new BoxDecoration(border: Border.all(color: Colors.black)),
+            child: new ListTile(
+              title: new Text(
+                "Login",
+                textAlign: TextAlign.center,
+              ),
+              onTap: _navigator,
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  _onChanged(bool value) async {
+    sharedPreferences = await SharedPreferences.getInstance();
+    setState(() {
+      checkValue = value;
+      sharedPreferences.setBool("check", checkValue);
+      sharedPreferences.setString("username", username.text);
+      sharedPreferences.setString("password", password.text);
+      //sharedPreferences.commit();
+      getCredential();
+    });
+  }
+
+  getCredential() async {
+    sharedPreferences = await SharedPreferences.getInstance();
+    setState(() {
+      checkValue = sharedPreferences.getBool("check");
+      if (checkValue != null) {
+        if (checkValue) {
+          username.text = sharedPreferences.getString("username");
+          password.text = sharedPreferences.getString("password");
+        } else {
+          username.clear();
+          password.clear();
+          sharedPreferences.clear();
+        }
+      } else {
+        checkValue = false;
+      }
+    });
+  }
+
+  _navigator() {
+    if (username.text.length != 0 || password.text.length != 0) {
+
+      print('Successfull');
+      sharedPreferences.setBool('login', false);
+
+      Navigator.of(context).pushAndRemoveUntil(
+          new MaterialPageRoute(
+              builder: (BuildContext context) => new UserDashboard()),
+              (Route<dynamic> route) => false);
+    } else {
+      showDialog(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Login'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('username or password cannot be empty'),
+                //Text('Would you like to approve of this message?'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+      );
+    }
+  }
+}

@@ -1,6 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_shoppingapp/dashboard/dashboard.dart';
+import 'package:flutter_shoppingapp/dashboard/loginpage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'loginscreen.dart';
 
@@ -39,16 +42,14 @@ class LandingScreen extends StatefulWidget {
 
 class _LandingScreenState extends State<LandingScreen> {
 
+  SharedPreferences logindata;
+  bool newuser;
+
   @override
   void initState() {
     super.initState();
-    Timer(Duration(seconds: 3),
-            ()=>Navigator.pushReplacement(context,
-            MaterialPageRoute(builder:
-                (context) => LoginScreen()
-            )
-        )
-    );
+
+    check_if_already_login();
   }
 
   @override
@@ -57,6 +58,24 @@ class _LandingScreenState extends State<LandingScreen> {
         color: Colors.white,
         child:FlutterLogo(size:MediaQuery.of(context).size.height)
     );
+  }
+
+  void check_if_already_login() async {
+    logindata = await SharedPreferences.getInstance();
+    newuser = (logindata.getBool('login') ?? true);
+    print(newuser);
+    if (newuser == false) {
+      Navigator.pushReplacement(
+          context, new MaterialPageRoute(builder: (context) => UserDashboard()));
+    }else{
+      Timer(Duration(seconds: 3),
+              ()=>Navigator.pushReplacement(context,
+              MaterialPageRoute(builder:
+                  (context) => LoginPage()
+              )
+          )
+      );
+    }
   }
 
 }
